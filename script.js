@@ -1,5 +1,7 @@
-// Replace this with your Notion API token and page ID
-const apiKey = 'your_api_key_here';
+// Replace this with your Notion API token
+const apiKey = 'secret_sb4Xhq0OxjZUm0mJxc1Q5xY9NhxFYkqYuvnmpkgdB4O';
+
+// Replace this with your Notion page ID
 const pageId = '548ae342d87d42fba1c6958503aba510';
 
 // Function to fetch content from Notion and display it on the website
