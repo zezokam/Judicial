@@ -42,4 +42,4 @@ async function fetchNotionContent() {
 }
 
 // Fetch and display Notion content when the page loads
-fetchNotionContent();
+window.addEventListener('load', fetchNotionContent);
