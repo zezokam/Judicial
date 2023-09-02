@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إرسال البيانات إلى قاعدة بيانات Notion</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <h1>إرسال البيانات إلى قاعدة بيانات Notion</h1>
+    <form>
+        <label for="subject">الموضوع:</label>
+        <input type="text" id="subject" placeholder="الموضوع...">
+        <br>
+
+        <label for="category">التصنيف:</label>
+        <input type="text" id="category" placeholder="التصنيف...">
+        <br>
+
+        <label for="department">الدائرة:</label>
+        <select id="department">
+            <option value="الإدارية">الإدارية</option>
+            <option value="الجزائية">الجزائية</option>
+            <option value="التجارية">التجارية</option>
+            <option value="العمالية">العمالية</option>
+            <option value="الشرعية">الشرعية</option>
+            <option value="المدنية">المدنية</option>
+        </select>
+        <br>
+
+        <button id="submit">إرسال</button>
+    </form>
+
+    <script src="script.js"></script>
+</body>
+</html>
