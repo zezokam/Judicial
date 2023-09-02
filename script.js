@@ -1,58 +1,43 @@
-document.getElementById("submit").addEventListener("click", function (event) {
-    event.preventDefault();
+// Replace this with your Notion API token and page ID
+const apiKey = 'your_api_key_here';
+const pageId = '548ae342d87d42fba1c6958503aba510';
 
-    const subject = document.getElementById("subject").value;
-    const department = document.getElementById("department").value;
-    const content = document.getElementById("content").value;
-
-    const databaseId = "f62c207a744c4afc91e29eb93eb3b55f"; // Your database ID
-    const apiKey = "secret_sb4Xhq0OxjZUm0mJxc1Q5xY9NhxFYkqYuvnmpkgdB4O"; // Your API token
-
-    fetch(`https://api.notion.com/v1/pages/${databaseId}`, {
-        method: "POST",
-        headers: {
-            "Authorization": `Bearer ${apiKey}`,
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            parent: { database_id: databaseId },
-            properties: {
-                "الموضوع": {
-                    title: [
-                        {
-                            text: {
-                                content: subject,
-                            },
-                        },
-                    ],
-                },
-                "الدائرة": {
-                    select: {
-                        name: department,
-                    },
-                },
-                "المحتوى": {
-                    rich_text: [
-                        {
-                            text: {
-                                content: content,
-                            },
-                        },
-                    ],
-                },
+// Function to fetch content from Notion and display it on the website
+async function fetchNotionContent() {
+    try {
+        const response = await fetch(`https://api.notion.com/v1/blocks/${pageId}/children`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${apiKey}`,
             },
-        }),
-    })
-    .then((response) => response.json())
-    .then((data) => {
-        console.log("Entry added to Notion:", data);
-        alert("تمت إضافة البيانات إلى قاعدة البيانات!");
-        document.getElementById("subject").value = "";
-        document.getElementById("department").value = "الإدارية";
-        document.getElementById("content").value = "";
-    })
-    .catch((error) => {
-        console.error("Error adding entry to Notion:", error);
-        alert("حدث خطأ أثناء إضافة البيانات إلى قاعدة البيانات.");
-    });
-});
+        });
+
+        if (!response.ok) {
+            throw new Error('Unable to fetch Notion content');
+        }
+
+        const data = await response.json();
+        const contentContainer = document.getElementById('content-container');
+
+        // Loop through the blocks and render them on the website
+        data.results.forEach(block => {
+            const blockElement = document.createElement('div');
+
+            // Check the block type and render accordingly (e.g., headings, text, lists, etc.)
+            if (block.type === 'heading_1') {
+                blockElement.innerHTML = `<h1>${block.heading_1.text[0].text.content}</h1>`;
+            } else if (block.type === 'paragraph') {
+                blockElement.innerHTML = `<p>${block.paragraph.text[0].text.content}</p>`;
+            }
+            
+            // Add more conditions to handle other block types as needed
+
+            contentContainer.appendChild(blockElement);
+        });
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+// Fetch and display Notion content when the page loads
+fetchNotionContent();
